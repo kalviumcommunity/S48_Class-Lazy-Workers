@@ -1,0 +1,11 @@
+{
+  "name": "s48_class-lazy-workers",
+  "version": "1.0.0",
+  "description": "## Project Title: Class' Lazy Workers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "maverickOG",
+  "license": "ISC"
+}
