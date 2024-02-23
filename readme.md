@@ -53,9 +53,10 @@ Developing a web platform where users can log their pending hours, see how they 
 - Set up the database and configure environment variables.
 - Run the application using `npm start`.
 
-## Deployed Link:
+## Deployed Links:
 
 - Check the application health status by visiting the [Ping Endpoint](https://asap-project-wkv4.onrender.com/ping).
+- View the live application [here](https://class-lazy-workers.pages.dev/).
 
 ## Technologies Used:
 
