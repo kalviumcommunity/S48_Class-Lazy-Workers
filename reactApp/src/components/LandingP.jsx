@@ -58,7 +58,7 @@ function LandingP() {
             "Class Lazy Workers has transformed the way I approach my work. I
             can now stay on top of my tasks and beat procrastination!"
           </p>
-          <p className="user-info">- Kane Marlin, Marketing Professional</p>
+          <p className="user-info">- Kane Marlin, Student</p>
         </div>
         {/* Include additional testimonials as needed */}
       </section>
