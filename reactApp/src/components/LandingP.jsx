@@ -1,9 +1,15 @@
-// LandingP.jsx
-
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./LandingP.css";
 
 function LandingP() {
+  const navigate = useNavigate(); // Create a navigate function
+
+  const handleSignUpClick = () => {
+    // Redirect to the signup page
+    navigate("/signup");
+  };
+
   return (
     <div className="landing-page">
       <header>
@@ -20,7 +26,7 @@ function LandingP() {
             peers, and level up your work habits.
           </p>
           {/* Updated button with span elements for hover animation */}
-          <button className="customBtn">
+          <button className="customBtn" onClick={handleSignUpClick}>
             <span></span>
             <span></span>
             <span></span>
