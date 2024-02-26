@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 .container {
   background-image: url("./assets/Gem-bg1.jpeg");
   background-repeat: no-repeat;
