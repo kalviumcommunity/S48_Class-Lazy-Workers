@@ -1,11 +1,12 @@
-require("dotenv").config(); // Load environment variables from .env file
-console.log("Environment variables loaded:", process.env);
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const routes = require("./routes");
+const UserModel = require("./models/user");
 
 const app = express();
-const port = process.env.PUBLIC_PORT || 3000;
+const port = 3001;
 
 // Connect to MongoDB
 mongoose
@@ -20,31 +21,25 @@ mongoose
     console.error("❌ MongoDB connection error:", error);
   });
 
-const db = mongoose.connection;
-
 app.use(express.json());
+app.use(cors());
 app.use("/", routes);
 
-// Define the /ping route
-app.get("/ping", (req, res) => {
-  res.json({ message: "pong" });
+// Fetch users from MongoDB
+app.get("/getUser", async (req, res) => {
+  try {
+    const users = await UserModel.find();
+    res.json(users);
+  } catch (err) {
+    console.error("❌ Error fetching users:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-// Define the /status route to show database connection status
-app.get("/status", (req, res) => {
-  const databaseStatus = db.readyState === 1 ? "connected" : "disconnected";
-  res.json({
-    message: "o_O",
-    database: databaseStatus,
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`🚀 Server running on PORT: ${port}`);
   });
-});
+}
 
-// Start the server
-app.listen(port, () => {
-  console.log(`🚀 server running on PORT: ${port}`);
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Internal Server Error" });
-});
+module.exports = app;

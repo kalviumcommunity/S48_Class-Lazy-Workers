@@ -8,23 +8,19 @@
   padding: 0;
 }
 
-body {
-  overflow-y: hidden;
-}
-
 .container {
   background-image: url("./assets/Gem-bg1.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
 }
 
 .signup-page {
   width: 600px;
-  height: 600px;
-  margin: 10% auto; /* Auto for left/right to center horizontally */
+  height: 660px;
+  margin: 8% auto; /* Auto for left/right to center horizontally */
   padding: 20px;
   border: 5px solid goldenrod;
   background-color: white;

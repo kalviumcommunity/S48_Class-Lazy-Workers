@@ -10,6 +10,11 @@ function LandingP() {
     navigate("/signup");
   };
 
+  const handleUserData = () => {
+    // Redirect to the userdata page
+    navigate("/userlist");
+  };
+
   return (
     <div className="landing-page">
       <header>
@@ -31,7 +36,14 @@ function LandingP() {
             <span></span>
             <span></span>
             <span></span>
-            Sign Up Now
+            Sign Up
+          </button>
+          <button className="customBtn" onClick={handleUserData}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            User Data
           </button>
         </div>
       </section>
