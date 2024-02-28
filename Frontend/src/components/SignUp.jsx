@@ -6,10 +6,11 @@ function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    username: "",
     name: "",
-    squadNumber: "",
     email: "",
-    githubUsername: "",
+    squad: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -34,6 +35,17 @@ function SignUp() {
       <div className="signup-page">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -45,40 +57,40 @@ function SignUp() {
             required
           />
 
-          <label htmlFor="squadNumber">Squad Number:</label>
-          <input
-            type="text"
-            id="squadNumber"
-            name="squadNumber"
-            placeholder="Enter your squad number"
-            value={formData.squadNumber}
-            onChange={handleChange}
-            required
-          />
-
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="Enter your Kalvium email address"
+            placeholder="Enter your email address"
             value={formData.email}
             onChange={handleChange}
             required
           />
 
-          <label htmlFor="githubUsername">GitHub Username:</label>
+          <label htmlFor="squad">Squad:</label>
           <input
             type="text"
-            id="githubUsername"
-            name="githubUsername"
-            placeholder="Enter your Github username"
-            value={formData.githubUsername}
+            id="squad"
+            name="squad"
+            placeholder="Enter your squad"
+            value={formData.squad}
             onChange={handleChange}
             required
           />
 
-          <button class="SignUpBtn" type="submit">
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <button className="SignUpBtn" type="submit">
             Sign Up
           </button>
         </form>
