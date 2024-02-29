@@ -28,7 +28,6 @@ export default function UserList() {
               <th>Username</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Password</th>
               <th>Squad</th>
             </tr>
           </thead>
@@ -38,7 +37,6 @@ export default function UserList() {
                 <td>{user.username}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.password}</td>
                 <td>{user.squad}</td>
               </tr>
             ))}
