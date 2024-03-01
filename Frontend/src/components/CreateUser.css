@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  font-family: "Mukta", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.crUserContainer {
+  background-image: url("./assets/Gem-bg2.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.create-user-container {
+  width: 40%;
+  height: 65vh;
+  margin: 8% auto;
+  padding: 20px;
+  border: 5px solid goldenrod;
+  background-color: white;
+  border-radius: 15px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input::placeholder {
+  color: gray;
+}
+
+.customBtn2 {
+  --c: goldenrod;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: 0.5s;
+  margin: 1em;
+  margin-left: 130px;
+  padding: 0.5em 1em;
+  font-size: 16px;
+  border: 0.3em solid var(--c);
+  border-radius: 0.5em;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 2em;
+  cursor: pointer;
+}
+
+.customBtn2 span {
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  background-color: var(--c);
+  transform: translateY(150%);
+  border-radius: 50%;
+  left: calc((var(--n) - 1) * 25%);
+  transition: 0.5s;
+  transition-delay: calc((var(--n) - 1) * 0.1s);
+  z-index: -1;
+}
+
+.customBtn:hover {
+  color: black;
+}
+
+.customBtn:hover span {
+  transform: translateY(0) scale(2);
+}
+
+.customBtn span:nth-child(1) {
+  --n: 1;
+}
+
+.customBtn span:nth-child(2) {
+  --n: 2;
+}
+
+.customBtn span:nth-child(3) {
+  --n: 3;
+}
+
+.customBtn span:nth-child(4) {
+  --n: 4;
+}

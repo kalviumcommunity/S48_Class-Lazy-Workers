@@ -6,7 +6,7 @@ const routes = require("./routes");
 const UserModel = require("./models/user");
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001; // Use the PORT from environment variable or default to 3001
 
 // Connect to MongoDB
 mongoose
@@ -24,6 +24,24 @@ mongoose
 app.use(express.json());
 app.use(cors());
 app.use("/", routes);
+
+// Add route to handle user creation
+app.post("/addUser", async (req, res) => {
+  try {
+    const newUser = await UserModel.create(req.body);
+    console.log("New user added:", newUser);
+    res.status(201).json(newUser);
+  } catch (err) {
+    console.error("❌ Error adding user:", err);
+
+    // Provide more information about the error in the response
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: err.message,
+      stack: err.stack,
+    });
+  }
+});
 
 // Fetch users from MongoDB
 app.get("/getUser", async (req, res) => {
