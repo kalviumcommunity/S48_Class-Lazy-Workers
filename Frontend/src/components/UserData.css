@@ -37,9 +37,9 @@ body {
 }
 
 .user-list-container {
-  margin-top: 150px; /* Center the container on page with padding above and below */
-  width: 70%;
-  margin-left: 15%;
+  /* margin-top: 100px; Center the container on the page with padding above and below */
+  width: 80%;
+  margin: 8% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +52,7 @@ body {
 }
 
 .user-table {
-  width: 100%;
+  width: 50%;
   border-collapse: collapse;
   margin-top: 20px;
 }
@@ -74,6 +74,37 @@ body {
   cursor: grab;
 }
 
+/* Update button */
+.update-button {
+  background-color: white; /* Button color */
+  color: black; /* Text color */
+  border: 2px solid #007bff; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  margin-right: 10px; /* Add spacing between the update and delete buttons */
+  padding: 5px 16px; /* Increase padding */
+}
+
+.update-button:hover {
+  background-color: #007bff; /* Darker color on hover */
+  color: white;
+}
+
+/* Delete button */
+.delete-button {
+  background-color: white; /* Button color */
+  color: black; /* Text color */
+  border: 2px solid #dc3545; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  padding: 5px 16px; /* Increase padding */
+}
+
+.delete-button:hover {
+  background-color: #dc3545; /* Darker color on hover */
+  color: whitesmoke;
+}
+
 .add-user-button {
   display: block;
   width: 20%; /* Make the button take the full width */
@@ -82,15 +113,14 @@ body {
   font-size: 16px;
   text-align: center;
   text-decoration: none;
-  background-color: white;
-  color: black;
-  border: 2px solid goldenrod;
-  border-radius: 5px;
+  background-color: white; /* Button color */
+  color: black; /* Text color */
+  border: 2px solid #3e885b; /* Border color */
+  border-radius: 5px; /* Rounded corners */
   cursor: pointer;
-  text-transform: uppercase;
 }
 
 .add-user-button:hover {
-  background-color: goldenrod;
-  color: white;
+  background-color: #3e885b; /* Darker color on hover */
+  color: wheat;
 }

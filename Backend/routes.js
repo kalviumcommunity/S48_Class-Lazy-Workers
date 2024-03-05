@@ -1,54 +1,81 @@
 const express = require("express");
 const router = express.Router();
+const UserModel = require("./models/user");
 
-// Sample data (replace this with your actual data model or database)
-let data = [
-  { id: 1, name: "Suppuni" },
-  { id: 2, name: "Sappuni" },
-  { id: 3, name: "Manguni" },
-  // Add more data as needed
-];
-
-// GET all data
-router.get("/api/data", (req, res) => {
-  res.json(data);
-});
-
-// GET a specific item by ID
-router.get("/api/data/:id", (req, res) => {
-  const itemId = parseInt(req.params.id);
-  const item = data.find((item) => item.id === itemId);
-
-  if (item) {
-    res.json(item);
-  } else {
-    res.status(404).json({ error: "Item not found" });
+// GET all users
+router.get("/api/users", async (req, res) => {
+  try {
+    const users = await UserModel.find();
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// POST create new data
-router.post("/api/data", (req, res) => {
-  const newItem = req.body; // Assuming you send JSON data in the request body
-  data.push(newItem);
-  res.status(201).json(newItem);
+// GET a specific user by ID
+router.get("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await UserModel.findById(userId);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-// PUT update an item by ID
-router.put("/api/data/:id", (req, res) => {
-  const itemId = parseInt(req.params.id);
-  const updatedItem = req.body;
-
-  data = data.map((item) => (item.id === itemId ? updatedItem : item));
-
-  res.json(updatedItem);
+// POST create a new user
+router.post("/api/users", async (req, res) => {
+  const newUser = req.body;
+  try {
+    const createdUser = await UserModel.create(newUser);
+    res.status(201).json(createdUser);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-// DELETE an item by ID
-router.delete("/api/data/:id", (req, res) => {
-  const itemId = parseInt(req.params.id);
-  data = data.filter((item) => item.id !== itemId);
+// PUT update a user by ID
+router.put("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  const updatedUserData = req.body;
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      updatedUserData,
+      { new: true }
+    );
+    if (updatedUser) {
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
-  res.json({ message: "Item deleted successfully" });
+// DELETE a user by ID
+router.delete("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const deletedUser = await UserModel.findByIdAndDelete(userId);
+    if (deletedUser) {
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 module.exports = router;
