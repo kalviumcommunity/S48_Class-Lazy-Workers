@@ -101,16 +101,16 @@ body {
 }
 
 .delete-button:hover {
-  background-color: #dc3545; /* Darker color on hover */
+  background-color: #ee4b2b; /* Darker color on hover */
   color: whitesmoke;
 }
 
 .add-user-button {
   display: block;
-  width: 20%; /* Make the button take the full width */
+  width: 15%; /* Make the button take the full width */
   margin-top: 20px; /* Add margin space between the table and button */
-  padding: 10px;
-  font-size: 16px;
+  padding: 5px;
+  font-size: 20px;
   text-align: center;
   text-decoration: none;
   background-color: white; /* Button color */
@@ -118,6 +118,8 @@ body {
   border: 2px solid #3e885b; /* Border color */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer;
+  text-transform: capitalize;
+  font-weight: 500;
 }
 
 .add-user-button:hover {
