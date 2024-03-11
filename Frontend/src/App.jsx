@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import UserData from "./components/UserData";
 import CreateUser from "./components/CreateUser";
 import UpdateUser from "./components/UpdateUser";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/userlist" element={<UserData />} />
         <Route path="/createuser" element={<CreateUser />} />
         <Route path="/updateUser/:userId" element={<UpdateUser />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
