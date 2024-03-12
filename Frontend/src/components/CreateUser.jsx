@@ -4,44 +4,36 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./CreateUser.css";
 
-// Component for creating a new user
 export default function CreateUser() {
-  // Initialize state for form data
   const [formData, setFormData] = useState({
-    username: "", // User's chosen username
-    name: "", // User's full name
-    email: "", // User's email address
-    password: "", // User's chosen password
-    squad: "", // User's squad number
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+    squad: "",
   });
 
-  // Navigation hook provided by react-router-dom
   const navigate = useNavigate();
 
-  // Handler for input change events
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // POST request to add a new user
+      // Make a POST request to add a new user
       const response = await axios.post(
         "http://localhost:3001/addUser",
         formData
       );
-
-      // Log successful response
       console.log("New user added:", response.data);
 
-      // Redirect to user list page
+      // Redirect to the user list page after successful submission
       navigate("/userlist");
     } catch (error) {
-      // Log error during submission
       console.error("Error adding user:", error);
     }
   };
@@ -59,7 +51,7 @@ export default function CreateUser() {
             value={formData.username}
             onChange={handleChange}
             placeholder="Enter your username"
-            required // Field is required
+            required
           />
 
           <label>Name:</label>
@@ -69,7 +61,7 @@ export default function CreateUser() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Enter your name"
-            required // Field is required
+            required
           />
 
           <label>Email:</label>
@@ -79,7 +71,7 @@ export default function CreateUser() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
-            required // Field is required
+            required
           />
 
           <label>Password:</label>
@@ -89,7 +81,7 @@ export default function CreateUser() {
             value={formData.password}
             onChange={handleChange}
             placeholder="Enter your password"
-            required // Field is required
+            required
           />
 
           <label>Squad:</label>
@@ -99,7 +91,7 @@ export default function CreateUser() {
             value={formData.squad}
             onChange={handleChange}
             placeholder="Enter your squad number"
-            required // Field is required
+            required
           />
 
           <button type="submit" className="customBtn2">
