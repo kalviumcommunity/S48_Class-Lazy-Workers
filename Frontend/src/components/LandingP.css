@@ -18,10 +18,6 @@ header {
   margin-bottom: 40px;
 }
 
-.hero-section h2 {
-  text-align: left !important;
-}
-
 .hero-section {
   display: flex;
   justify-content: space-between;
