@@ -1,35 +1,43 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./SignUp.css";
 
 function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
-    name: "",
-    email: "",
-    squad: "",
-    password: "",
+    username: "", // User's chosen username
+    name: "", // Full name of the user
+    email: "", // User's email address
+    squad: "", // User's squad name or affiliation
+    password: "", // User's chosen password
   });
 
+  // handleChange function to update formData state variable with user inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Update the squad field only if the entered value is a number
+    if (name === "squad" && isNaN(value)) {
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
+  // handleSubmit function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add any additional logic for handling form submission here
     console.log("Form submitted:", formData);
 
-    // Redirect to LandingP after sign-up
+    // Navigate to the LandingP component after successful form submission
     navigate("/");
   };
 
+  // JSX code to render the SignUp component
   return (
     <div className="container">
       <div className="signup-page">
@@ -70,7 +78,7 @@ function SignUp() {
 
           <label htmlFor="squad">Squad:</label>
           <input
-            type="text"
+            type="number" // Change input type to "number"
             id="squad"
             name="squad"
             placeholder="Enter your squad"
@@ -93,6 +101,12 @@ function SignUp() {
           <button className="SignUpBtn" type="submit">
             Sign Up
           </button>
+
+          <p style={{ color: "blue", textAlign: "center", marginTop: "20px" }}>
+            <Link to="/login" style={{ textDecoration: "underline" }}>
+              Already an existing user? Login here.
+            </Link>
+          </p>
         </form>
       </div>
     </div>

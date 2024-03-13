@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate to navigate between pages
 import "./LandingP.css";
 
 function LandingP() {
@@ -13,6 +13,20 @@ function LandingP() {
   const handleUserData = () => {
     // Redirect to the userdata page
     navigate("/userlist");
+  };
+
+  // Function to handle logout function when user is logged in
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/logout"
+      );
+      console.log(response.data);
+      console.log("Logout successful");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (
@@ -45,6 +59,13 @@ function LandingP() {
             <span></span>
             User Data
           </button>
+          <button className="customBtn" onClick={handleLogout}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Log Out
+          </button>
         </div>
       </section>
 
@@ -73,8 +94,8 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            "Class Lazy Workers has transformed the way I approach my work. I
-            can now stay on top of my tasks and beat procrastination!"
+            `&quot;`Class Lazy Workers has transformed the way I approach my work. I
+            can now stay on top of my tasks and beat procrastination!
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
