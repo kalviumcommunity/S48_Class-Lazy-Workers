@@ -1,39 +1,62 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios"; // Import Axios for HTTP requests
 import "./SignUp.css";
 
 function SignUp() {
-  // Initialize navigate hook from react-router-dom to handle navigation
   const navigate = useNavigate();
 
-  // Initialize state variable formData to store form inputs
   const [formData, setFormData] = useState({
-    username: "", // User's chosen username
-    name: "", // Full name of the user
-    email: "", // User's email address
-    squad: "", // User's squad name or affiliation
-    password: "", // User's chosen password
+    username: "",
+    name: "",
+    email: "",
+    squad: "", // Change to an empty string or default numerical value
+    password: "",
   });
 
-  // handleChange function to update formData state variable with user inputs
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Update the squad field only if the entered value is a number
+    if (name === "squad" && isNaN(value)) {
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value, // Update the respective field in formData
+      [name]: value,
     }));
   };
 
-  // handleSubmit function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
 
-    // Navigate to the LandingP component after successful form submission
-    navigate("/");
+    try {
+      // POST request to add a new user
+      const response = await axios.post(
+        "http://localhost:3001/addUser",
+        formData
+      );
+
+      // Log successful response
+      console.log("New user added:", response.data);
+
+      // Display the sign-up success message
+      setSignUpSuccess(true);
+
+      // After a delay, reset the success message and navigate to UserData.jsx
+      setTimeout(() => {
+        setSignUpSuccess(false);
+        navigate("/userlist");
+      }, 1000); // 1000 milliseconds (1 seconds) delay
+    } catch (error) {
+      // Log error during submission
+      console.error("Error adding user:", error);
+    }
   };
 
-  // JSX code to render the SignUp component
   return (
     <div className="container">
       <div className="signup-page">
@@ -74,7 +97,7 @@ function SignUp() {
 
           <label htmlFor="squad">Squad:</label>
           <input
-            type="text"
+            type="number" // Change input type to "number"
             id="squad"
             name="squad"
             placeholder="Enter your squad"
@@ -98,6 +121,13 @@ function SignUp() {
             Sign Up
           </button>
 
+          {/* Display pop-up on successful sign-up */}
+          {signUpSuccess && (
+            <div className="popup">
+              <p>Sign Up Successful!</p>
+            </div>
+          )}
+
           <p style={{ color: "blue", textAlign: "center", marginTop: "20px" }}>
             <Link to="/login" style={{ textDecoration: "underline" }}>
               Already an existing user? Login here.
@@ -109,5 +139,4 @@ function SignUp() {
   );
 }
 
-// Export the SignUp component for use in other parts of the application
 export default SignUp;

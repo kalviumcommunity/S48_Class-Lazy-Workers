@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingP from "./components/LandingP";
 import SignUp from "./components/SignUp";
 import UserData from "./components/UserData";
-import CreateUser from "./components/CreateUser";
 import UpdateUser from "./components/UpdateUser";
 import Login from "./components/Login";
 
@@ -15,7 +14,6 @@ function App() {
         <Route path="/" element={<LandingP />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/userlist" element={<UserData />} />
-        <Route path="/createuser" element={<CreateUser />} />
         <Route path="/updateUser/:userId" element={<UpdateUser />} />
         <Route path="/login" element={<Login />} />
       </Routes>

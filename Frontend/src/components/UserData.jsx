@@ -88,7 +88,7 @@ export default function UserList() {
           </tbody>
         </table>
       )}
-      <Link to="/CreateUser" className="add-user-button">
+      <Link to="/SignUp" className="add-user-button">
         Add User
       </Link>
     </div>
