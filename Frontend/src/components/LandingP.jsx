@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate to navigate between pages
 import "./LandingP.css";
+import axios from "axios";
 
 function LandingP() {
   const navigate = useNavigate(); // Create a navigate function
