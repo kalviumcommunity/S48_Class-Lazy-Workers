@@ -1,24 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate to navigate between pages
-import axios from "axios";
 import "./LandingP.css";
 
 function LandingP() {
-  // Initialize the navigate function to navigate between pages
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Create a navigate function
 
-  // Function to navigate to the signup page
   const handleSignUpClick = () => {
+    // Redirect to the signup page
     navigate("/signup");
   };
 
-  // Function to navigate to the login page
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
-
-  // Function to navigate to the userdata page
   const handleUserData = () => {
+    // Redirect to the userdata page
     navigate("/userlist");
   };
 
@@ -38,13 +31,11 @@ function LandingP() {
 
   return (
     <div className="landing-page">
-      {/* Header section */}
       <header>
         <h1>Class Lazy Workers</h1>
         <p>Embrace productivity, track your tasks, and beat procrastination!</p>
       </header>
 
-      {/* Hero section with image and content */}
       <section className="hero-section">
         <div className="hero-image"></div>
         <div className="hero-content">
@@ -54,13 +45,6 @@ function LandingP() {
             peers, and level up your work habits.
           </p>
           {/* Updated button with span elements for hover animation */}
-          <button className="customBtn" onClick={handleLoginClick}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Log In
-          </button>
           <button className="customBtn" onClick={handleSignUpClick}>
             <span></span>
             <span></span>
@@ -85,7 +69,6 @@ function LandingP() {
         </div>
       </section>
 
-      {/* Features section */}
       <section className="feature-section">
         <h2>Features</h2>
         <div className="feature-grid">
@@ -107,7 +90,6 @@ function LandingP() {
         </div>
       </section>
 
-      {/* Testimonial section */}
       <section className="testimonial-section">
         <h2>What Our Users Say</h2>
         <div className="testimonial">
@@ -120,7 +102,6 @@ function LandingP() {
         {/* Include additional testimonials as needed */}
       </section>
 
-      {/* Footer section */}
       <footer>
         <p>&copy; 2024 Class Lazy Workers. All rights reserved.</p>
       </footer>

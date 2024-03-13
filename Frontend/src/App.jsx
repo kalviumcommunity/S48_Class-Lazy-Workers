@@ -5,7 +5,6 @@ import LandingP from "./components/LandingP";
 import SignUp from "./components/SignUp";
 import UserData from "./components/UserData";
 import UpdateUser from "./components/UpdateUser";
-import Login from "./components/Login";
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/userlist" element={<UserData />} />
         <Route path="/updateUser/:userId" element={<UpdateUser />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

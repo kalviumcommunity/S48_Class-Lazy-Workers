@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import "./UpdateUser.css";
+import { useNavigate } from "react-router-dom";
+import "./CreateUser.css";
 
-export default function UpdateUser() {
+export default function CreateUser() {
   const [formData, setFormData] = useState({
     username: "",
     name: "",
@@ -12,23 +12,7 @@ export default function UpdateUser() {
     squad: "",
   });
 
-  const { userId } = useParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/getUser/${userId}`
-        );
-        setFormData(response.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,18 +23,26 @@ export default function UpdateUser() {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3001/updateUser/${userId}`, formData);
-      navigate(`/userlist`);
+      // Make a POST request to add a new user
+      const response = await axios.post(
+        "http://localhost:3001/addUser",
+        formData
+      );
+      console.log("New user added:", response.data);
+
+      // Redirect to the user list page after successful submission
+      navigate("/userlist");
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error adding user:", error);
     }
   };
 
   return (
-    <div className="updateUserContainer">
-      <div className="update-user-container">
-        <h2>Update User</h2>
+    <div className="crUserContainer">
+      <div className="create-user-container">
+        <h2>Create User</h2>
         <form onSubmit={handleSubmit}>
+          {/* Input fields for each user attribute */}
           <label>Username:</label>
           <input
             type="text"
@@ -101,12 +93,12 @@ export default function UpdateUser() {
             required
           />
 
-          <button type="submit" className="customBtn3">
+          <button type="submit" className="customBtn2">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            Update User
+            Add User
           </button>
         </form>
       </div>

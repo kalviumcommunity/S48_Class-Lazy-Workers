@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios"; // Import Axios for HTTP requests
 import "./SignUp.css";
 
 function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
-    name: "",
-    email: "",
-    squad: "", // Change to an empty string or default numerical value
-    password: "",
+    username: "", // User's chosen username
+    name: "", // Full name of the user
+    email: "", // User's email address
+    squad: "", // User's squad name or affiliation
+    password: "", // User's chosen password
   });
 
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
-
+  // handleChange function to update formData state variable with user inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -30,33 +28,16 @@ function SignUp() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // handleSubmit function to handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form submitted:", formData);
 
-    try {
-      // POST request to add a new user
-      const response = await axios.post(
-        "http://localhost:3001/addUser",
-        formData
-      );
-
-      // Log successful response
-      console.log("New user added:", response.data);
-
-      // Display the sign-up success message
-      setSignUpSuccess(true);
-
-      // After a delay, reset the success message and navigate to UserData.jsx
-      setTimeout(() => {
-        setSignUpSuccess(false);
-        navigate("/userlist");
-      }, 1000); // 1000 milliseconds (1 seconds) delay
-    } catch (error) {
-      // Log error during submission
-      console.error("Error adding user:", error);
-    }
+    // Navigate to the LandingP component after successful form submission
+    navigate("/");
   };
 
+  // JSX code to render the SignUp component
   return (
     <div className="container">
       <div className="signup-page">
@@ -120,13 +101,6 @@ function SignUp() {
           <button className="SignUpBtn" type="submit">
             Sign Up
           </button>
-
-          {/* Display pop-up on successful sign-up */}
-          {signUpSuccess && (
-            <div className="popup">
-              <p>Sign Up Successful!</p>
-            </div>
-          )}
 
           <p style={{ color: "blue", textAlign: "center", marginTop: "20px" }}>
             <Link to="/login" style={{ textDecoration: "underline" }}>
