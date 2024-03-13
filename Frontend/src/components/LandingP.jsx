@@ -56,8 +56,8 @@ function LandingP() {
         <div className="hero-content">
           <h2>Your Productivity Journey Starts Here</h2>
           <p>
-            "Class Lazy Workers has transformed the way I approach my work. I
-            can now stay on top of my tasks and beat procrastination!"
+            Join Class Lazy Workers to log your pending hours, compare with
+            peers, and level up your work habits.
           </p>
           {/* Buttons for login, sign up, user data, and logout */}
           <button className="customBtn" onClick={handleLoginClick}>
@@ -118,8 +118,8 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            "Class Lazy Workers has transformed the way I approach my work. I
-            can now stay on top of my tasks and beat procrastination!"
+            &quot;Class Lazy Workers has transformed the way I approach my work.
+            I can now stay on top of my tasks and beat procrastination!&quot;
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
