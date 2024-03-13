@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate to navigate between pages
-import axios from "axios";
-import "./LandingP.css";
+import axios from "axios"; // Import Axios for making HTTP requests
+import "./LandingP.css"; // Import CSS file for styling
 
 function LandingP() {
   // Initialize the navigate function to navigate between pages
   const navigate = useNavigate();
 
-  // Function to navigate to the signup page
+  // Function to navigate to the sign up page when clicking on the Sign Up button
   const handleSignUpClick = () => {
     navigate("/signup");
   };
@@ -17,21 +17,27 @@ function LandingP() {
     navigate("/login");
   };
 
-  // Function to navigate to the userdata page
+  // Function to navigate to the user data page
   const handleUserData = () => {
     navigate("/userlist");
   };
 
-  // Function to handle logout function when user is logged in
+  // Function to handle logout when the user is logged in
   const handleLogout = async () => {
     try {
+      // Send a POST request to the logout endpoint
       const response = await axios.post(
         "http://localhost:3001/api/auth/logout"
       );
       console.log(response.data);
       console.log("Logout successful");
+      // Clear the username cookie
+      document.cookie =
+        "username" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // Navigate to the login page after successful logout
       navigate("/login");
     } catch (error) {
+      // Handle logout error
       console.error("Logout error:", error);
     }
   };
@@ -50,10 +56,10 @@ function LandingP() {
         <div className="hero-content">
           <h2>Your Productivity Journey Starts Here</h2>
           <p>
-            Join Class Lazy Workers to log your pending hours, compare with
-            peers, and level up your work habits.
+            "Class Lazy Workers has transformed the way I approach my work. I
+            can now stay on top of my tasks and beat procrastination!"
           </p>
-          {/* Updated button with span elements for hover animation */}
+          {/* Buttons for login, sign up, user data, and logout */}
           <button className="customBtn" onClick={handleLoginClick}>
             <span></span>
             <span></span>
@@ -112,8 +118,8 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            `&quot;` Class Lazy Workers has transformed the way I approach my work. I
-            can now stay on top of my tasks and beat procrastination!
+            "Class Lazy Workers has transformed the way I approach my work. I
+            can now stay on top of my tasks and beat procrastination!"
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
