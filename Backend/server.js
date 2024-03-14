@@ -7,6 +7,7 @@ const routes = require("./routes"); // Import custom routes
 const { UserModel } = require("./models/user"); // Import User model
 const cookieParser = require("cookie-parser"); // Import cookie-parser for handling cookies
 const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
+const jwt = require("jsonwebtoken"); // Import JWT library for token generation
 
 // Create an Express application
 const app = express(); // Initialize Express application
@@ -37,42 +38,72 @@ app.use(
 app.use(cookieParser()); // Parse cookies
 app.use("/", routes); // Use custom routes
 
-// Login endpoint
+// Login endpoint with JWT token
 app.post("/api/auth/login", async (req, res) => {
-  const { username, password } = req.body; // Get username and password from request body
+  const { username, password } = req.body; // Extract username and password from request body
 
   try {
-    const user = await UserModel.findOne({ username }); // Find user by username in database
+    const user = await UserModel.findOne({ username }); // Find user by username in the database
 
     if (user) {
-      // Use bcrypt to compare the hashed password
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(password, user.password); // Compare hashed password
 
       if (passwordMatch) {
-        res.cookie("username", user.username); // Set username cookie
-        res.json({ message: "Login successful", username }); // Respond with success message
+        // Generate JWT token with user's username as payload
+        const token = jwt.sign(
+          { username: user.username },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h", // Token expiration time
+          }
+        );
+
+        // Set token in a cookie for client-side storage
+        res.cookie("token", token, {
+          httpOnly: true, // Cookie cannot be accessed by client-side scripts
+          sameSite: "strict", // Prevents CSRF attacks
+          secure: true, // Set to true if using HTTPS
+        });
+        res.cookie("username", username, {
+          httpOnly: true, // Cookie cannot be accessed by client-side scripts
+          sameSite: "strict", // Prevents CSRF attacks
+          secure: true, // Set to true if using HTTPS
+        });
+
+        // Respond with success message and username
+        res.json({ message: "Login successful", username, token });
       } else {
-        res.status(401).json({ error: "Invalid username or password" }); // Respond with error for invalid password
+        // Respond with error for invalid username or password
+        res.status(401).json({ error: "Invalid username or password" });
       }
     } else {
-      res.status(401).json({ error: "Invalid username or password" }); // Respond with error for invalid username
+      // Respond with error for invalid username or password
+      res.status(401).json({ error: "Invalid username or password" });
     }
   } catch (err) {
-    console.error("❌ Error during login:", err); // Log error
-    res.status(500).json({ error: "Internal Server Error" }); // Respond with internal server error
+    // Log the error with more details
+    console.error("❌ Error during login:", err.message);
+    console.error("Error stack trace:", err.stack);
+
+    // Optionally, you can also send the error message to the client
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: err.message });
   }
 });
 
-// Logout endpoint
+// Logout endpoint to clear JWT token cookie
 app.post("/api/auth/logout", (req, res) => {
-  res.clearCookie("username", {
-    // Clear username cookie
+  // Clear token cookie from client-side
+  res.clearCookie("token", {
     secure: true, // Set to true if using HTTPS
     httpOnly: true, // Cookie cannot be accessed by client-side scripts
     sameSite: "strict", // Prevents CSRF attacks
     expires: new Date(0), // Expires the cookie immediately
   });
-  res.json({ message: "Logout successful" }); // Respond with success message
+
+  // Respond with success message
+  res.json({ message: "Logout successful" });
 });
 
 // Add user endpoint

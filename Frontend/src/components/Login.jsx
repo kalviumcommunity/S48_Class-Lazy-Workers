@@ -32,17 +32,20 @@ function Login() {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
+
     try {
-      // Send a POST request to the login endpoint
+      // Send POST request to login endpoint with form data
       const response = await axios.post(
         "http://localhost:3001/api/auth/login",
         formData
       );
 
-      // Handle the response from the server
       console.log(response);
-      setCookie("username", response.data.username); // Set username cookie
-      // Assuming successful login, navigate to the landing page
+      // Set JWT token received from server in a cookie
+      setCookie("token", response.data.token);
+      setCookie("username", response.data.username);
+
+      // Redirect user to the homepage after successful login
       navigate("/");
     } catch (error) {
       // Handle login error
