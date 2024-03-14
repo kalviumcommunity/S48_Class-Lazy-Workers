@@ -29,11 +29,17 @@ function LandingP() {
       const response = await axios.post(
         "http://localhost:3001/api/auth/logout"
       );
-      console.log(response.data);
+
+      // Log the response data
+      console.log("Logout response:", response.data);
       console.log("Logout successful");
-      // Clear the username cookie
+
+      // Clear the JWT token cookie
       document.cookie =
-        "username" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
       // Navigate to the login page after successful logout
       navigate("/login");
     } catch (error) {
@@ -118,8 +124,8 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            &quot;Class Lazy Workers has transformed the way I approach my work.
-            I can now stay on top of my tasks and beat procrastination!&quot;
+            `&quot;`Join Class Lazy Workers to log your pending hours, compare
+            with peers, and level up your work habits.`&quot;`
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
