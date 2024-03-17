@@ -1,62 +1,126 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate to navigate between pages
-import axios from "axios"; // Import Axios for making HTTP requests
-import "./LandingP.css"; // Import CSS file for styling
+// LandingP.jsx
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./LandingP.css";
+import PropTypes from "prop-types";
+
+// User Popup component
+const UserPopup = ({ user, onClose }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  // Handle closing the popup
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 300); // Delay to match the animation duration
+  };
+
+  return (
+    <div className="popup-overlay">
+      <div className={`popup-content ${isClosing ? "closing" : ""}`}>
+        <span className="close-btn" onClick={handleClose}>
+          &times;
+        </span>
+        <h2>{user.username}</h2>
+        <p>Name: {user.name}</p>
+        <p>Email: {user.email}</p>
+        <p>Squad: {user.squad}</p>
+      </div>
+    </div>
+  );
+};
+
+// Prop types validation for UserPopup component
+UserPopup.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    squad: PropTypes.number.isRequired,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 function LandingP() {
-  // Initialize the navigate function to navigate between pages
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Get the navigate function from react-router-dom
+  const [users, setUsers] = useState([]); // State to store the list of users
+  const [hovered, setHovered] = useState(false); // State to track if the user data button is hovered
+  const [selectedUser, setSelectedUser] = useState(null); // State to store the selected user
+  const [loggedIn, setLoggedIn] = useState(false); // State to track if the user is logged in
+  const userListRef = useRef(null); // Ref to access the user list element
+  const timeoutId = useRef(null); // Ref to store the timeout ID for hiding the user list
 
-  // Function to navigate to the sign up page when clicking on the Sign Up button
-  const handleSignUpClick = () => {
-    navigate("/signup");
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/getUser");
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Handle showing the user list on button hover
+  const handleUserDataEnter = () => {
+    setHovered(true);
+    clearTimeout(timeoutId.current); // Clear any existing timeout
   };
 
-  // Function to navigate to the login page
-  const handleLoginClick = () => {
-    navigate("/login");
+  // Handle hiding the user list on button hover with delay
+  const handleUserDataLeave = () => {
+    timeoutId.current = setTimeout(() => {
+      setHovered(false);
+    }, 500); // Delay of 500ms before hiding the user list
   };
 
-  // Function to navigate to the user data page
-  const handleUserData = () => {
-    navigate("/userlist");
+  // Handle user click to select user and display the popup
+  const handleUserClick = (user) => {
+    setSelectedUser(user); // Set the selected user
+    if (loggedIn) {
+      // No need to show the popup here, it will be rendered conditionally
+    }
   };
 
-  // Function to handle logout when the user is logged in
+  // Handle closing the popup
+  const closePopup = () => {
+    setSelectedUser(null); // Clear the selected user to close the popup
+  };
+
+  // Handle logout
   const handleLogout = async () => {
     try {
-      // Send a POST request to the logout endpoint
       const response = await axios.post(
         "http://localhost:3001/api/auth/logout"
       );
-
-      // Log the response data
       console.log("Logout response:", response.data);
       console.log("Logout successful");
-
-      // Clear the JWT token cookie
       document.cookie =
         "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie =
         "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-      // Navigate to the login page after successful logout
-      navigate("/login");
+      setLoggedIn(false); // Set the loggedIn state to false
+      navigate("/login"); // Navigate to the login page
     } catch (error) {
-      // Handle logout error
       console.error("Logout error:", error);
     }
   };
 
   return (
     <div className="landing-page">
-      {/* Header section */}
+      {/* Header */}
       <header>
         <h1>Class Lazy Workers</h1>
         <p>Embrace productivity, track your tasks, and beat procrastination!</p>
       </header>
 
-      {/* Hero section with image and content */}
+      {/* Hero section */}
       <section className="hero-section">
         <div className="hero-image"></div>
         <div className="hero-content">
@@ -66,21 +130,25 @@ function LandingP() {
             peers, and level up your work habits.
           </p>
           {/* Buttons for login, sign up, user data, and logout */}
-          <button className="customBtn" onClick={handleLoginClick}>
+          <button className="customBtn" onClick={() => navigate("/login")}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Log In
           </button>
-          <button className="customBtn" onClick={handleSignUpClick}>
+          <button className="customBtn" onClick={() => navigate("/signup")}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Sign Up
           </button>
-          <button className="customBtn" onClick={handleUserData}>
+          <button
+            className="customBtn"
+            onMouseEnter={handleUserDataEnter}
+            onMouseLeave={handleUserDataLeave}
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -96,6 +164,30 @@ function LandingP() {
           </button>
         </div>
       </section>
+
+      {/* User list */}
+      {hovered && ( // Render the user list when hovered
+        <div
+          className="userList"
+          ref={userListRef}
+          onMouseEnter={handleUserDataEnter}
+          onMouseLeave={handleUserDataLeave}
+        >
+          {/* Map through users and display username */}
+          {users.map((user) => (
+            <div
+              key={user._id}
+              onClick={() => handleUserClick(user)}
+              className={selectedUser === user ? "selected" : ""}
+            >
+              {user.username}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Render the user popup if a user is selected */}
+      {selectedUser && <UserPopup user={selectedUser} onClose={closePopup} />}
 
       {/* Features section */}
       <section className="feature-section">
@@ -115,7 +207,6 @@ function LandingP() {
               projects.
             </p>
           </div>
-          {/* Include similar items for other features */}
         </div>
       </section>
 
@@ -124,15 +215,14 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            `&quot;`Join Class Lazy Workers to log your pending hours, compare
-            with peers, and level up your work habits.`&quot;`
+            "Join Class Lazy Workers to log your pending hours, compare with
+            peers, and level up your work habits."
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
-        {/* Include additional testimonials as needed */}
       </section>
 
-      {/* Footer section */}
+      {/* Footer */}
       <footer>
         <p>&copy; 2024 Class Lazy Workers. All rights reserved.</p>
       </footer>
