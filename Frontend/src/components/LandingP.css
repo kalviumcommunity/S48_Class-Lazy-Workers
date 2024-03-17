@@ -1,32 +1,37 @@
 /* LandingP.css */
 
+/* Import Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap");
 
+/* Reset default body styles */
 body {
   font-family: "Mukta", sans-serif;
   overflow-y: visible !important;
 }
 
+/* Landing page container */
 .landing-page {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Header styles */
 header {
   text-align: center;
   margin-bottom: 40px;
 }
 
-.hero-section h2 {
-  text-align: left !important;
-}
-
+/* Hero section styles */
 .hero-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 60px;
+}
+
+.hero-section h2 {
+  text-align: left !important;
 }
 
 .hero-image {
@@ -52,6 +57,7 @@ header {
   margin-bottom: 30px;
 }
 
+/* Custom button styles */
 .customBtn {
   --c: goldenrod;
   position: relative;
@@ -108,6 +114,8 @@ header {
 .customBtn span:nth-child(4) {
   --n: 4;
 }
+
+/* Feature section styles */
 .feature-section {
   margin-bottom: 80px;
 }
@@ -122,6 +130,7 @@ header {
   text-align: center;
 }
 
+/* Testimonial section styles */
 .testimonial-section {
   text-align: center;
   margin-bottom: 80px;
@@ -139,6 +148,105 @@ header {
   color: #777;
 }
 
+/* User list styles */
+.userList {
+  position: absolute;
+  top: calc(
+    50% + 25px
+  ); /* Position the user list below the button with a small gap */
+  left: calc(74% + 10px); /* Center the user list horizontally */
+  transform: translateX(-50%); /* Center the user list horizontally */
+  background-color: #fff; /* Set background color */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for a subtle elevation effect */
+  padding: 10px; /* Add padding to the user list items */
+  max-height: 200px; /* Set maximum height for the user list to enable scrolling if needed */
+  overflow-y: auto; /* Enable vertical scrolling if the user list exceeds the maximum height */
+  z-index: 1000; /* Ensure the user list appears above other elements */
+}
+
+/* Style for individual user list items */
+.userList div {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  padding: 5px; /* Add padding to the user list items */
+}
+
+/* Style for selected user */
+.userList div.selected {
+  background-color: #f0f0f0; /* Change background color for selected user */
+}
+
+/* Position the user list container */
+.customBtn:nth-child(3) ~ .userList {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* User popup styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure the popup is on top of other elements */
+  transition: opacity 0.3s ease-in-out; /* Add transition for fade effect */
+}
+
+.popup-content {
+  background-color: white;
+  width: 350px;
+  height: 230px;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  transform-origin: center bottom; /* Set the origin for the scale animation */
+  animation: popup-open 0.3s ease-in-out forwards;
+}
+
+.popup-content.closing {
+  animation: popup-close 0.3s ease-in-out forwards;
+}
+
+@keyframes popup-open {
+  0% {
+    opacity: 0;
+    transform: scale(0.5); /* Start with a small scale */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* End with the normal scale */
+  }
+}
+
+@keyframes popup-close {
+  0% {
+    opacity: 1;
+    transform: scale(1); /* Start with the normal scale */
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5); /* End with a small scale */
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  font-size: 35px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* Footer styles */
 footer {
   text-align: center;
   margin-top: 50px;
@@ -147,6 +255,7 @@ footer {
   color: #777;
 }
 
+/* Additional font styles */
 .mukta-regular {
   font-family: "Mukta", sans-serif;
   font-weight: 400;
