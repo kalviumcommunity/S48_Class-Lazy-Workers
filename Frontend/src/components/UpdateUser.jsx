@@ -25,7 +25,7 @@ export default function UpdateUser() {
       try {
         // Fetch user data from the API endpoint
         const response = await axios.get(
-          `http://localhost:3001/getUser/${userId}`
+          `https://asap-project-wkv4.onrender.com//getUser/${userId}`
         );
 
         // Update the state variable 'formData' with fetched user data
@@ -50,7 +50,10 @@ export default function UpdateUser() {
 
     try {
       // Update user data on the API endpoint
-      await axios.put(`http://localhost:3001/updateUser/${userId}`, formData);
+      await axios.put(
+        `https://asap-project-wkv4.onrender.com//updateUser/${userId}`,
+        formData
+      );
 
       // Navigate to the user list page
       navigate(`/userlist`);

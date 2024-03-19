@@ -15,7 +15,9 @@ export default function UserList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/getUser"); // Make a GET request to the API endpoint to fetch user data
+        const response = await axios.get(
+          "https://asap-project-wkv4.onrender.com//getUser"
+        ); // Make a GET request to the API endpoint to fetch user data
         setUsers(response.data); // Save the fetched data in the 'users' state variable
       } catch (error) {
         console.error("Error fetching data:", error); // Log any errors encountered during the fetch request
@@ -36,10 +38,14 @@ export default function UserList() {
   // Handle delete button click event
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3001/deleteUser/${userId}`); // Make a DELETE request to the API endpoint to delete the user with the given user ID
+      await axios.delete(
+        `https://asap-project-wkv4.onrender.com//deleteUser/${userId}`
+      ); // Make a DELETE request to the API endpoint to delete the user with the given user ID
       console.log(`User with ID ${userId} deleted`);
 
-      const response = await axios.get("http://localhost:3001/getUser"); // Make a GET request to the API endpoint to fetch the updated list of users
+      const response = await axios.get(
+        "https://asap-project-wkv4.onrender.com//getUser"
+      ); // Make a GET request to the API endpoint to fetch the updated list of users
       setUsers(response.data); // Save the updated list of users in the 'users' state variable
     } catch (error) {
       console.error(`Error deleting user with ID ${userId}:`, error); // Log any errors encountered during the delete or fetch request

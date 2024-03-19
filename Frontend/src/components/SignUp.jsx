@@ -36,7 +36,7 @@ function SignUp() {
     try {
       // POST request to add a new user
       const response = await axios.post(
-        "http://localhost:3001/addUser",
+        "https://asap-project-wkv4.onrender.com//addUser",
         formData
       );
 

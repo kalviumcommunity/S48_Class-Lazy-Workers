@@ -30,10 +30,7 @@ mongoose
 // Middleware setup
 app.use(express.json()); // Parse JSON bodies
 app.use(
-  cors({
-    origin: "http://localhost:2983", // Specify allowed origin for CORS
-    credentials: true, // Allow credentials (cookies, authorization headers)
-  })
+  cors()
 );
 app.use(cookieParser()); // Parse cookies
 app.use("/", routes); // Use custom routes

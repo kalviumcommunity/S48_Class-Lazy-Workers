@@ -57,7 +57,9 @@ function LandingP() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/getUser");
+        const response = await axios.get(
+          "https://asap-project-wkv4.onrender.com//getUser"
+        );
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -97,7 +99,7 @@ function LandingP() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/auth/logout"
+        "https://asap-project-wkv4.onrender.com//api/auth/logout"
       );
       console.log("Logout response:", response.data);
       console.log("Logout successful");
@@ -215,8 +217,8 @@ function LandingP() {
         <h2>What Our Users Say</h2>
         <div className="testimonial">
           <p>
-            "Join Class Lazy Workers to log your pending hours, compare with
-            peers, and level up your work habits."
+            &quot;Join Class Lazy Workers to log your pending hours, compare with
+            peers, and level up your work habits.&quot;
           </p>
           <p className="user-info">- Kane Marlin, Student</p>
         </div>
